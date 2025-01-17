@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
 			.allowedHeaders("*")
 			.allowedOrigins(
 				"http://localhost:8080",
+				"http://localhost:5173",
 				"http://api.cotato-team4.kro.kr/"
 			)
 			.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
