@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  app:
+    image: ${DOCKER_USERNAME}/team4
+    container_name: team4
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./data/nginx/app.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+

@@ -1,0 +1,13 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]  # .env import
+  application:
+    name: team4
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    groups-order: DESC # path, query, body, response ? ??
+    tags-sorter: alpha # ??? ??? ??? ??
+    operations-sorter: method # delete - get - patch - post - put ??? ??
+  use-fqn: true
