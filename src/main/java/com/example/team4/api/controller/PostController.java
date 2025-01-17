@@ -32,7 +32,7 @@ public class PostController {
     }
 
     @Operation(summary = "마이페이지용 일기 리스트", description = "마이페이지용 일기 리스트입니다.")
-    @GetMapping("/{memberId}")
+    @GetMapping("/{memberId}/mypage")
     public ResponseEntity<PostsResponse> getPosts(@PathVariable("memberId") Long memberId) {
         return ResponseEntity.ok(postService.findAllByMemberId(memberId));
     }
