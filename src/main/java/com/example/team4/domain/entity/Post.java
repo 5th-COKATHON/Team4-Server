@@ -11,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -38,6 +37,9 @@ public class Post {
     @Column(name = "latitude", nullable = false)
     private Double latitude;
 
+    @Column(name = "longitude", nullable = false)
+    private Double longitude;
+
     @Column(name = "place_name")
     private String placeName;
 
@@ -45,6 +47,6 @@ public class Post {
     private String context;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 }
