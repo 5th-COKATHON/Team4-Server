@@ -31,11 +31,6 @@ public class Photo {
     @JoinColumn(name = "post_id")
     private Post post;
 
-	public void setPost(Post post) {
-		this.post = post;
-		post.getPhotos().add(this);
-	}
-
 	public static Photo toEntity(String url) {
 		return new Photo(null, url, null);
 	}
