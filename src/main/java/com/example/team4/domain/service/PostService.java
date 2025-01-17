@@ -73,4 +73,10 @@ public class PostService {
 
         return new PostInfoGroupByLocation(latitude, longitude, postInfos);
     }
+
+    public PostInfo getPostInfo(final Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
+        return PostInfo.from(post);
+    }
 }

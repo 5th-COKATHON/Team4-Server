@@ -1,5 +1,6 @@
 package com.example.team4.api.controller;
 
+import com.example.team4.api.dto.response.PostInfo;
 import com.example.team4.api.dto.response.PostsGroupByLocationResponse;
 import com.example.team4.api.dto.response.PostsResponse;
 import com.example.team4.domain.service.PostService;
@@ -41,5 +42,11 @@ public class PostController {
     @GetMapping("/{memberId}/map")
     public ResponseEntity<PostsGroupByLocationResponse> getPostsMap(@PathVariable("memberId") Long memberId) {
         return ResponseEntity.ok(postService.findAllByMemberIdGroupByLocation(memberId));
+    }
+
+    @Operation(summary = "일기 상세 조회", description = "일기 상세 조회")
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostInfo> getPostInfo(@PathVariable("postId") Long postId) {
+        return ResponseEntity.ok(postService.getPostInfo(postId));
     }
 }
