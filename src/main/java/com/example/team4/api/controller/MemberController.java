@@ -44,9 +44,9 @@ public class MemberController {
 
 	@Operation(summary = "회원가입", description = "회원가입을 진행합니다.")
 	@PostMapping("/join")
-	public ResponseEntity<Void> signUp(final @RequestBody @Valid SignUpRequest signUpRequest) {
-		memberService.signUp(MemberDTO.toMemberDTO(signUpRequest));
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<MemberIdResponse> signUp(final @RequestBody @Valid SignUpRequest signUpRequest) {
+		Long memberId = memberService.signUp(MemberDTO.toMemberDTO(signUpRequest));
+		return ResponseEntity.ok(MemberIdResponse.toMemberIdResponse(memberId));
 	}
 
 	@Operation(summary = "이메일에 해당하는 Member id 조회", description = "이메일에 해당하는 Member id를 조회합니다.")
