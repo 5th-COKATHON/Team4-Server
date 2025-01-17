@@ -1,7 +1,6 @@
 package com.example.team4.global.error;
 
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         log.error("에러가 발생한 지점 {}, {}", httpServletRequest.getMethod(), requestURI);
         MethodArgumentErrorResponse errorResponse = MethodArgumentErrorResponse.of(
-                ErrorCode.POST_NOT_FOUND, httpServletRequest);
+                ErrorCode.INVALID_INPUT_VALUE, httpServletRequest);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 }
