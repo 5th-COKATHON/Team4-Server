@@ -18,7 +18,6 @@ public enum ErrorCode {
     DUPLICATED_NICKNAME(HttpStatus.BAD_REQUEST, "이미 사용중인 닉네임입니다"),
 
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 게시물이 없습니다"),
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 멤버가 존재하지 않습니다")
     ;
     private final HttpStatus httpStatus;
     private final String message;
