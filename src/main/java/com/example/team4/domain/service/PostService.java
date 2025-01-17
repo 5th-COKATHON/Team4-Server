@@ -7,11 +7,15 @@ import com.example.team4.api.dto.response.PostsGroupByLocationResponse;
 import com.example.team4.api.dto.response.PostsResponse;
 import com.example.team4.domain.Emotion;
 import com.example.team4.domain.entity.Member;
+import com.example.team4.domain.entity.Photo;
 import com.example.team4.domain.entity.Post;
+import com.example.team4.domain.entity.S3Info;
 import com.example.team4.domain.repository.MemberRepository;
+import com.example.team4.domain.repository.PhotoRepository;
 import com.example.team4.domain.repository.PostRepository;
 import com.example.team4.global.error.AppException;
 import com.example.team4.global.error.ErrorCode;
+import com.example.team4.global.s3.S3Uploader;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service
@@ -27,6 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostService {
     private final PostRepository postRepository;
     private final MemberRepository memberRepository;
+    private final S3Uploader s3Uploader;
+    private final PhotoRepository photoRepository;
 
     @Transactional
     public void addPost(Long memberId, LocalDate localDate, String content, Emotion emotion,
@@ -92,5 +99,14 @@ public class PostService {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
         post.update(localDate, content, emotion, latitude, longitude, placeName);
+    }
+
+    @Transactional
+    public void addPhoto(Long postId, MultipartFile file) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
+
+        S3Info s3Info = s3Uploader.uploadFiles(file, "/member");
+        photoRepository.save(Photo.of(s3Info, post));
     }
 }

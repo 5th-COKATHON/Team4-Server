@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,14 +25,20 @@ public class Photo {
 	@Column(name = "photo_id")
 	private Long id;
 
-	@Column(name = "photo_url", nullable = false)
-	private String url;
+	@Column(name = "post_photo")
+	private S3Info s3Info;
 
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 
-	public static Photo toEntity(String url) {
-		return new Photo(null, url, null);
+	@Builder
+	public Photo(S3Info s3Info, Post post) {
+		this.s3Info = s3Info;
+		this.post = post;
+	}
+
+	public static Photo of(S3Info s3Info, Post post) {
+		return new Photo(s3Info, post);
 	}
 }
