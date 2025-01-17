@@ -11,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-
 public class Post {
 
     @Id
@@ -38,6 +36,9 @@ public class Post {
     @Column(name = "latitude", nullable = false)
     private Double latitude;
 
+    @Column(name = "longitude", nullable = false)
+    private Double longitude;
+
     @Column(name = "place_name")
     private String placeName;
 
@@ -45,6 +46,32 @@ public class Post {
     private String context;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    private Post(Emotion emotion, LocalDate date, Double latitude, Double longitude, String placeName, String context,
+                 Member member) {
+        this.emotion = emotion;
+        this.date = date;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.placeName = placeName;
+        this.context = context;
+        this.member = member;
+    }
+
+    public static Post of(Member member, Emotion emotion, LocalDate date, String placeName, Double latitude,
+                          Double longitude, String context) {
+        return new Post(emotion, date, latitude, longitude, placeName, context, member);
+    }
+
+    public void update(LocalDate localDate, String content, Emotion emotion, Double latitude, Double longitude,
+                       String placeName) {
+        this.emotion = emotion;
+        this.date = localDate;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.placeName = placeName;
+        this.context = content;
+    }
 }
