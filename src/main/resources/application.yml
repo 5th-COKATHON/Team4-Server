@@ -1,8 +1,19 @@
 spring:
-  config:
-    import: optional:file:.env[.properties]  # .env import
   application:
     name: team4
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_PATH}
+    username: ${DB_USERNAME}
+    password: ${DB_PWD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
 
 springdoc:
   swagger-ui:
