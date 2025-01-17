@@ -34,8 +34,10 @@ public class MemberService {
 
 	// 회원가입
 	@Transactional
-	public void signUp(final MemberDTO memberDTO) {
-		memberRepository.save(Member.toEntity(memberDTO));
+	public Long signUp(final MemberDTO memberDTO) {
+		Member member =  memberRepository.save(Member.toEntity(memberDTO));
+
+		return member.getId();
 	}
 
 	// 이메일에 해당하는 Member id 조회
