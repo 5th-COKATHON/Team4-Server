@@ -85,4 +85,12 @@ public class PostService {
     public void deletePost(Long postId) {
         postRepository.deleteById(postId);
     }
+
+    @Transactional
+    public void updatePost(Long postId, LocalDate localDate, String content, Emotion emotion,
+                           Double latitude, Double longitude, String placeName) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
+        post.update(localDate, content, emotion, latitude, longitude, placeName);
+    }
 }

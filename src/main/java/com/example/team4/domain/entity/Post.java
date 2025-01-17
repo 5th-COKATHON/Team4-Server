@@ -64,4 +64,14 @@ public class Post {
                           Double longitude, String context) {
         return new Post(emotion, date, latitude, longitude, placeName, context, member);
     }
+
+    public void update(LocalDate localDate, String content, Emotion emotion, Double latitude, Double longitude,
+                       String placeName) {
+        this.emotion = emotion;
+        this.date = localDate;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.placeName = placeName;
+        this.context = content;
+    }
 }
