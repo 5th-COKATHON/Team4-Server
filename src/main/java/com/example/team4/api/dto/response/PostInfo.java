@@ -9,12 +9,11 @@ public record PostInfo(
         Double latitude,
         Double longitude,
         String placeName,
-        String context,
         Emotion emotion,
         LocalDate date
 ) {
     public static PostInfo from(Post post) {
         return new PostInfo(post.getId(), post.getLatitude(), post.getLongitude(), post.getPlaceName(),
-                post.getContext(), post.getEmotion(), post.getDate());
+                post.getEmotion(), post.getDate());
     }
 }
