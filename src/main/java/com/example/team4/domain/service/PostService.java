@@ -80,4 +80,9 @@ public class PostService {
                 .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
         return PostDetail.from(post);
     }
+
+    @Transactional
+    public void deletePost(Long postId) {
+        postRepository.deleteById(postId);
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.team4.api.controller;
 
 import com.example.team4.api.dto.response.PostDetail;
-import com.example.team4.api.dto.response.PostInfo;
 import com.example.team4.api.dto.response.PostsGroupByLocationResponse;
 import com.example.team4.api.dto.response.PostsResponse;
 import com.example.team4.domain.service.PostService;
@@ -11,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,5 +49,12 @@ public class PostController {
     @GetMapping("/{postId}")
     public ResponseEntity<PostDetail> getPostInfo(@PathVariable("postId") Long postId) {
         return ResponseEntity.ok(postService.getPostInfo(postId));
+    }
+
+    @Operation(summary = "일기 삭제", description = "일기 삭제")
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<Void> deletePost(@PathVariable("postId") Long postId) {
+        postService.deletePost(postId);
+        return ResponseEntity.ok().build();
     }
 }
