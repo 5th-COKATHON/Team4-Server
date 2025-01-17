@@ -1,5 +1,6 @@
 package com.example.team4.domain.service;
 
+import com.example.team4.api.dto.response.PostDetail;
 import com.example.team4.api.dto.response.PostInfo;
 import com.example.team4.api.dto.response.PostInfoGroupByLocation;
 import com.example.team4.api.dto.response.PostsGroupByLocationResponse;
@@ -74,9 +75,9 @@ public class PostService {
         return new PostInfoGroupByLocation(latitude, longitude, postInfos);
     }
 
-    public PostInfo getPostInfo(final Long postId) {
+    public PostDetail getPostInfo(final Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND));
-        return PostInfo.from(post);
+        return PostDetail.from(post);
     }
 }
