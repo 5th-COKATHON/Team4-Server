@@ -19,7 +19,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-
 public class Post {
 
     @Id
@@ -49,4 +48,20 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    private Post(Emotion emotion, LocalDate date, Double latitude, Double longitude, String placeName, String context,
+                 Member member) {
+        this.emotion = emotion;
+        this.date = date;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.placeName = placeName;
+        this.context = context;
+        this.member = member;
+    }
+
+    public static Post of(Member member, Emotion emotion, LocalDate date, String placeName, Double latitude,
+                          Double longitude, String context) {
+        return new Post(emotion, date, latitude, longitude, placeName, context, member);
+    }
 }
