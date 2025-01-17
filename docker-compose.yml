@@ -4,8 +4,6 @@ services:
     image: ${DOCKER_USERNAME}/team4
     container_name: team4
     restart: always
-    env_file:
-      - .env
     ports:
       - "8080:8080"
 

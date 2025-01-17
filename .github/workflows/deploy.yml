@@ -1,13 +1,23 @@
 # github repository Actions 페이지에 나타낼 이름
 name: team4 CI/CD with Gradle
 
+#on:
+#  pull_request:
+#    branches:
+#      - main
+#    types:
+#      - closed
+#  workflow_dispatch: # (2).수동 실행도 가능하도록
+
 on:
+  push:
+    branches:
+      - "*"  # 모든 브랜치에서 푸시할 때 실행되도록 설정
   pull_request:
     branches:
-      - develop
-    types:
-      - closed
-  workflow_dispatch: # (2).수동 실행도 가능하도록
+      - "*"  # 모든 브랜치에서 PR이 생성될 때 실행되도록 설정
+  workflow_dispatch: # 수동 실행도 가능하도록
+
 
 jobs:
   build:
@@ -34,6 +44,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: application.yml 파일을 생성 합니다.
+        run: |
+          cd ./src/main/resources
+          touch ./application.yml
+          echo "${{ secrets.PROPERTIES }}" > ./application.yml
+        shell: bash
+
       - name: gradle build를 위한 권한을 부여합니다.
         run: chmod +x gradlew
 
@@ -59,9 +76,6 @@ jobs:
             
             cd /home/ubuntu/
             
-            sudo touch .env
-            echo "${{ secrets.ALL_ENV_VARS }}" | sudo tee .env > /dev/null
-            
             sudo touch docker-compose.yml
             echo "${{ vars.DOCKER_COMPOSE }}" | sudo tee docker-compose.yml > /dev/null
             
@@ -72,5 +86,5 @@ jobs:
             else
                 echo "No containers to remove"
             fi
-            docker-compose --env-file ./.env -f docker-compose.yml up -d
+            docker-compose -f docker-compose.yml up -d
             docker image prune -f
