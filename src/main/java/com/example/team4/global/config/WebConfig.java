@@ -15,6 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
 			.allowedOrigins(
 				"http://localhost:8080",
 				"http://localhost:5173",
+				"http://team4-front.s3-website.ap-northeast-2.amazonaws.com",
 				"http://api.cotato-team4.kro.kr/"
 			)
 			.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
