@@ -109,4 +109,11 @@ public class PostService {
         S3Info s3Info = s3Uploader.uploadFiles(file, "/member");
         photoRepository.save(Photo.of(s3Info, post));
     }
+
+    @Transactional
+    public void deletePhoto(Long photoId) {
+        Photo photo = photoRepository.findById(photoId)
+                .orElseThrow(() -> new AppException(ErrorCode.PHOTO_NOT_FOUND));
+        s3Uploader.deleteFile(photo.getS3Info());
+    }
 }

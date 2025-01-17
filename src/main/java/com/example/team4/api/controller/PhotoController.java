@@ -28,9 +28,9 @@ public class PhotoController {
     }
 
     @Operation(summary = "일기 사진 삭제", description = "일기 사진 삭제")
-    @DeleteMapping
-    public ResponseEntity<Void> deletePost(@PathVariable("postId") Long postId) {
-        postService.deletePost(postId);
+    @DeleteMapping("{photoId}")
+    public ResponseEntity<Void> deletePhoto(@PathVariable("photoId") Long photoId) {
+        postService.deletePhoto(photoId);
         return ResponseEntity.ok().build();
     }
 }
