@@ -1,5 +1,6 @@
 package com.example.team4.domain.service;
 
+import com.example.team4.api.dto.response.PostsResponse;
 import com.example.team4.domain.Emotion;
 import com.example.team4.domain.entity.Member;
 import com.example.team4.domain.entity.Post;
@@ -27,5 +28,11 @@ public class PostService {
                 .orElseThrow(() -> new AppException(ErrorCode.MEMBER_NOT_FOUND));
         Post newPost = Post.of(member, emotion, localDate, placeName, latitude, longitude, content);
         postRepository.save(newPost);
+    }
+
+    public PostsResponse findAllByMemberId(final Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new AppException(ErrorCode.MEMBER_NOT_FOUND));
+        return PostsResponse.from(postRepository.findAllByMember(member));
     }
 }
